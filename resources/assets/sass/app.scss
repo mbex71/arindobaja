@@ -1,0 +1,57 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.logo-md{
+  position: absolute;
+  width: 200px !important;
+  z-index: 1;
+  
+}
+
+.logo-sm{
+  width: 80px;
+}
+
+.value-list{
+  background-color:#29344D !important;
+  height: 340px !important;
+  color: white;
+}
+
+.material-icons{
+  font-size: 26px;
+  position: relative;
+  
+  top: 8px;
+  // left: 8px;
+}
+
+.sendemail{
+  background-color: #29344D !important;
+  color: white;
+}
+
+.productlist{
+  background-color: #29344D !important;
+  color: white;
+}
+
+.prodjudul{
+  text-decoration: none !important;
+  color: white;
+  font-weight: bolder;
+  font-size: 22px;
+}
