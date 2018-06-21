@@ -8,12 +8,14 @@ class Createproduct extends Component{
 
         this.state = {
             title:'',
-            desc:''
+            desc:'',
+            imgurl:''
         }
 
         this.handleTitle = this.handleTitle.bind(this);
         this.handleDesc = this.handleDesc.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleImg = this.handleImg.bind(this);
     }
 
     handleTitle(e){
@@ -28,11 +30,18 @@ class Createproduct extends Component{
         })
     }
 
+    handleImg(e){
+        this.setState({
+            imgurl:e.target.files[0]
+        })
+    }
+
     handleSubmit(){
         const fd = new FormData();
 
         fd.append('title',this.state.title);
         fd.append('desc',this.state.desc);
+        fd.append('imgurl',this.state.imgurl,this.state.imgurl.name);
 
 
         Axios.post('/product/store',fd).then( Response => {
@@ -44,6 +53,9 @@ class Createproduct extends Component{
     }
 
     render() {
+
+        
+
         return (
             <div className="container mt-5">
                 <div className="form-group row">
@@ -63,6 +75,14 @@ class Createproduct extends Component{
                             value={this.state.desc}
                             onChange={this.handleDesc}
                         ></textarea>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <label className="col-md-2 col-form-label">Image</label>
+                    <div className="col-md-8">
+                        <input type="file" className="form-control" onChange={this.handleImg}/>
+                        <small>Ukuran file dibawah 2 MB & Resolution 1920 x 900</small>
                     </div>
                 </div>
 

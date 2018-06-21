@@ -66,3 +66,4 @@ Route::middleware(['auth'])->group(function(){
 
 Route::post('/sendmail','SendmailController@sendmail');
 Route::get('/productlist','ProductController@list');
+Route::get('/prodlistimg/{id}','ProductController@listimg');

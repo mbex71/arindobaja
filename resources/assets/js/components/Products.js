@@ -19,13 +19,22 @@ class Products extends Component{
         this.setState({
             prodid: e.target.value
         })
-        console.log(e.target.value)
+
+        // console.log(e.target.value);
+        
+        Axios.get('/prodlistimg/'+e.target.value).then( Response => {
+            
+            this.setState({
+                imgsrc: Response.data
+            })
+            // console.log(Response.data);
+        }).catch( Error => {
+            console.log(Error);
+        })
     }
 
-    render(){
-
-        const data = ['/img/pabrik.png','/img/Mesin.png','/img/kawat.png'];
-
+    render(){        
+        
         const list = this.state.data.map( (value,key) => {
 
                 const str = "heading"
@@ -70,7 +79,7 @@ class Products extends Component{
                     </div>
                     <div className="col-md-6">
 
-                        <img src={data[this.state.prodid]} className="img-fluid"/>
+                        <img src={this.state.imgsrc} className="img-fluid"/>
                     
                     </div>
                 </div>
@@ -86,6 +95,16 @@ class Products extends Component{
                 data: Response.data
             });
             // console.log(this.state.data);
+        }).catch( Error => {
+            console.log(Error);
+        })
+
+        Axios.get('/prodlistimg/1').then( Response => {
+            
+            this.setState({
+                imgsrc: Response.data
+            })
+            // console.log(Response.data);
         }).catch( Error => {
             console.log(Error);
         })

@@ -27,10 +27,13 @@ class ProductController extends Controller
     public function store(Request $request){
         $title = $request->title;
         $desc = $request->desc;
+        
+        $file = $request->file('imgurl')->store('products');
 
         Product::create([
             'title' => $title,
-            'desc' => $desc
+            'desc' => $desc,
+            'imgurl' => Storage::url($file)
         ]);
 
         return response()->json('Sukses tambah data!!');
@@ -72,5 +75,13 @@ class ProductController extends Controller
         $prod = Product::all();
 
         return response()->json($prod);
+    }
+
+    public function listimg(Request $request){
+
+        $prod = Product::find($request->id);
+
+        return response()->json($prod['imgurl']);
+
     }
 }

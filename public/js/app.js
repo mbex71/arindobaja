@@ -56539,12 +56539,14 @@ var Createproduct = function (_Component) {
 
         _this.state = {
             title: '',
-            desc: ''
+            desc: '',
+            imgurl: ''
         };
 
         _this.handleTitle = _this.handleTitle.bind(_this);
         _this.handleDesc = _this.handleDesc.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
+        _this.handleImg = _this.handleImg.bind(_this);
         return _this;
     }
 
@@ -56563,12 +56565,20 @@ var Createproduct = function (_Component) {
             });
         }
     }, {
+        key: 'handleImg',
+        value: function handleImg(e) {
+            this.setState({
+                imgurl: e.target.files[0]
+            });
+        }
+    }, {
         key: 'handleSubmit',
         value: function handleSubmit() {
             var fd = new FormData();
 
             fd.append('title', this.state.title);
             fd.append('desc', this.state.desc);
+            fd.append('imgurl', this.state.imgurl, this.state.imgurl.name);
 
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/product/store', fd).then(function (Response) {
                 console.log(Response.data);
@@ -56580,6 +56590,7 @@ var Createproduct = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container mt-5' },
@@ -56615,6 +56626,25 @@ var Createproduct = function (_Component) {
                             value: this.state.desc,
                             onChange: this.handleDesc
                         })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'form-group row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'label',
+                        { className: 'col-md-2 col-form-label' },
+                        'Image'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col-md-8' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'file', className: 'form-control', onChange: this.handleImg }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'small',
+                            null,
+                            'Ukuran file dibawah 2 MB & Resolution 1920 x 900'
+                        )
                     )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -57463,17 +57493,28 @@ var Products = function (_Component) {
     _createClass(Products, [{
         key: 'handleClick',
         value: function handleClick(e) {
+            var _this2 = this;
+
             this.setState({
                 prodid: e.target.value
             });
-            console.log(e.target.value);
+
+            // console.log(e.target.value);
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/prodlistimg/' + e.target.value).then(function (Response) {
+
+                _this2.setState({
+                    imgsrc: Response.data
+                });
+                // console.log(Response.data);
+            }).catch(function (Error) {
+                console.log(Error);
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
-            var data = ['/img/pabrik.png', '/img/Mesin.png', '/img/kawat.png'];
+            var _this3 = this;
 
             var list = this.state.data.map(function (value, key) {
 
@@ -57494,7 +57535,7 @@ var Products = function (_Component) {
                                 'button',
                                 { className: 'btn btn-link prodjudul', 'data-toggle': 'collapse', 'data-target': coltarget.concat(key), 'aria-expanded': 'true', 'aria-controls': 'collapseOne',
                                     value: value.id,
-                                    onClick: _this2.handleClick
+                                    onClick: _this3.handleClick
                                 },
                                 value.title
                             )
@@ -57539,7 +57580,7 @@ var Products = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col-md-6' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: data[this.state.prodid], className: 'img-fluid' })
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: this.state.imgsrc, className: 'img-fluid' })
                     )
                 )
             );
@@ -57547,13 +57588,23 @@ var Products = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this3 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/productlist').then(function (Response) {
-                _this3.setState({
+                _this4.setState({
                     data: Response.data
                 });
                 // console.log(this.state.data);
+            }).catch(function (Error) {
+                console.log(Error);
+            });
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/prodlistimg/1').then(function (Response) {
+
+                _this4.setState({
+                    imgsrc: Response.data
+                });
+                // console.log(Response.data);
             }).catch(function (Error) {
                 console.log(Error);
             });

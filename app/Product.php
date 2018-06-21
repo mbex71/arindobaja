@@ -10,7 +10,7 @@ class Product extends Model
     //
     use SoftDeletes;
 
-    protected $fillable = ['title','desc'];
+    protected $fillable = ['title','desc','imgurl'];
 
     public $timestamps = true;
 }
